@@ -59,9 +59,9 @@ class HoldEmGame : public Game {
     void print_players(ostream &ost, vector<Player>& players);
     void collect_cards();
     HoldEmHandRank holdem_hand_eval(const CardSet<Suit, HoldEmRank>& hand);
-    static bool is_straight(vector< Card<Suit, HoldEmRank> >& hand);
-    static bool is_flush(vector< Card<Suit, HoldEmRank> >& hand);
-    static vector<int> how_many_same_rank(vector< Card<Suit, HoldEmRank> >& hand);
+    static bool is_straight(CardSet<Suit, HoldEmRank>& hand);
+    static bool is_flush(CardSet<Suit, HoldEmRank>& hand);
+    static vector<int> how_many_same_rank(CardSet<Suit, HoldEmRank>& hand);
 
  protected:
     HoldEmState state;

@@ -11,19 +11,32 @@
 
 #include "includes.h"
 #include "Card_T.h"
+#include <algorithm>
+//#include <functional>
+//#include <iterator> TODO remove if not needed
 
 template <typename Suit, typename Rank> class CardSet {
  protected:
     vector< Card<Suit, Rank> > cards;
 
  public:
+    typedef Card<Suit, Rank> card_t;
+//    typedef Suit suit_t; FIXME look into this, says to add it in part 9
+//    typedef Rank rank_t;
+    typedef typename vector<card_t>::iterator iter_t;
+
     CardSet() = default;
     CardSet(const CardSet<Suit, Rank>& card_set);
     CardSet& operator=(const CardSet<Suit, Rank>&) = default;
     void print(ostream& ost, size_t size);
     CardSet& operator>>(CardSet<Suit, Rank>& card_set);
-    // public function to return pointer to member variable cards which is protected
-    static vector< Card<Suit, Rank> > CardSet::* get_cards() { return &CardSet::cards; }
+    void collect(CardSet<Suit, Rank>& card_set);
+    void collect_if(CardSet<Suit, Rank>& card_set, std::function<bool(Card<Suit, Rank>&)> pred);
+    bool request(CardSet<Suit, Rank>& card_set, Rank rank);
+//    static vector< Card<Suit, Rank> > CardSet::* get_cards() { return &CardSet::cards; } FIXME remove
+    auto begin() -> iter_t;
+    auto end() -> iter_t;
+    void sort();
     bool is_empty();
     virtual ~CardSet() = default; // need to include virtual destructor because this is a base class
 };

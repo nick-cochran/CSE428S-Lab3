@@ -99,20 +99,18 @@ void PinochleGame::collect_cards() {
  * @param melds a reference to a vector to put the melds in
  */
 void PinochleGame::suit_independent_eval(const CardSet<Suit, PinochleRank> &hand, vector<PinochleMeld>& melds) {
-
+    // create a copy of the hand to drop const
     CardSet<Suit, PinochleRank> hand_copy(hand);
-    vector<Card<Suit, PinochleRank> > CardSet<Suit, PinochleRank>::*cards =
-            CardSet<Suit, PinochleRank>::get_cards();
 
     // create a map of ranks to a vector of suits where each suit represents a card
     std::map<PinochleRank, vector<Suit> > cards_dict = std::map<PinochleRank, vector<Suit> >();
 
     // create references to make cleaner code
-    auto& nines = cards_dict[PinochleRank::nine];
+    auto& nines = cards_dict[PinochleRank::nine]; // TODO check why this is not used
     auto& jacks = cards_dict[PinochleRank::jack];
     auto& queens = cards_dict[PinochleRank::queen];
     auto& kings = cards_dict[PinochleRank::king];
-    auto& tens = cards_dict[PinochleRank::ten];
+    auto& tens = cards_dict[PinochleRank::ten]; // TODO check why this is not used
     auto& aces = cards_dict[PinochleRank::ace];
 
 //    // initialize each of the vectors FIXME remove as per code review AFTER TESTING
@@ -120,9 +118,13 @@ void PinochleGame::suit_independent_eval(const CardSet<Suit, PinochleRank> &hand
 //    kings = vector<Suit>(); tens = vector<Suit>(); aces = vector<Suit>();
 
     // push cards into the card dictionary
-    for(auto card : hand_copy.*cards) {
-        cards_dict[card.rank].push_back(card.suit);
+    auto card = hand_copy.begin();
+    for(; card != hand_copy.end(); ++card) {
+        cards_dict[card->rank].push_back(card->suit);
     }
+//    for(auto card : hand_copy.*cards) {
+//        cards_dict[card.rank].push_back(card.suit);
+//    }
 
     // Aces meld is possible
     if(aces.size() >= 4) {

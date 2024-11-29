@@ -30,15 +30,15 @@ void Deck<Suit, Rank>::shuffle() {
  * @tparam Rank card rank template parameter
  * @param card_set the CardSet to empty
  */
-template<typename Suit, typename Rank>
-void Deck<Suit, Rank>::collect(CardSet<Suit, Rank>& card_set) {
-
-    if(card_set.is_empty()) {
-        return; // nothing to collect
-    }
-
-    while(!card_set.is_empty()) {
-        card_set >> *this;
-    }
-
-}
+//template<typename Suit, typename Rank> FIXME remove
+//void Deck<Suit, Rank>::collect(CardSet<Suit, Rank>& card_set) {
+//
+//    if(card_set.is_empty()) {
+//        return; // nothing to collect
+//    }
+//
+//    while(!card_set.is_empty()) {
+//        card_set >> *this;
+//    }
+//
+//}
