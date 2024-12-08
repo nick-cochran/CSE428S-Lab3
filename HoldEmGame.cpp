@@ -11,7 +11,6 @@
 
 #include "HoldEmGame.h"
 
-//
 /**
  * Play a game of Texas Hold 'Em.
  *
@@ -35,7 +34,7 @@ int HoldEmGame::play() {
 
         create_eval_players(players); // create player_hands structs and assign hand ranks
         std::sort(players.begin(), players.end(),
-                  [](Player& a, Player& b) { // TODO I changed this to a reference so verify it still works
+                  [](Player& a, Player& b) {
                             return b < a;
                         });
 
@@ -79,6 +78,7 @@ HoldEmGame::HoldEmGame(int argc, const char **argv): Game(argc, argv), state(INI
  */
 void HoldEmGame::deal(CardSet<Suit, HoldEmRank>& burned_cards) {
     const int two_cards = 2;
+
     switch (state) {
         case HoldEmState::preflop:
             // deal two cards to each player
@@ -124,7 +124,6 @@ void HoldEmGame::create_eval_players(vector<Player>& players) {
     }
 
     for(Player& player : players) {
-        // TODO figure out a better way to do this
         auto common_cards_copy(common_cards);
         CardSet<Suit, HoldEmRank>& hand = player.hand;
 
@@ -223,18 +222,15 @@ HoldEmGame::Player::Player(CardSet<Suit, HoldEmRank> hand, string player_name, H
  * Evaluate a player's hand to return the rank of the hand.
  *
  * @param hand a reference to a CardSet object representing the player's hand
+ *
  * @return the hand rank of the hand
  */
 HoldEmHandRank HoldEmGame::holdem_hand_eval(const CardSet<Suit, HoldEmRank>& hand) {
 
-    CardSet<Suit, HoldEmRank> hand_copy(hand); // TODO why do I make a copy of the hand?
+    CardSet<Suit, HoldEmRank> hand_copy(hand);
     auto hand_begin = hand_copy.begin();
     auto hand_end = hand_copy.end();
     hand_copy.sort();
-//    std::sort(hand_begin, hand_end,
-//              [](Card<Suit, HoldEmRank> a, Card<Suit, HoldEmRank> b) {
-//                        return lt_rank_suit(a,b);
-//                    });
 
     // if the number of cards is not 5, cannot evaluate the hand so return undefined
     if(hand_end - hand_begin != HOLDEM_RANKS_SIZE) {
@@ -279,33 +275,29 @@ HoldEmHandRank HoldEmGame::holdem_hand_eval(const CardSet<Suit, HoldEmRank>& han
  * Find if a player has a straight in their hand.
  *
  * @param hand the player's hand
+ *
  * @return true if the player has a straight, false otherwise
  */
 bool HoldEmGame::is_straight(CardSet<Suit, HoldEmRank>& hand) {
-    HoldEmRank start = hand.begin()->rank;
+    HoldEmRank rank_iter = hand.begin()->rank;
 
 
-    if(start == HoldEmRank::jack || start == HoldEmRank::queen || start == HoldEmRank::king) {
+    if(rank_iter == HoldEmRank::jack || rank_iter == HoldEmRank::queen || rank_iter == HoldEmRank::king) {
         return false; // cannot have a straight starting at these ranks
-    }// else if(start == HoldEmRank::ace) { TODO double check I can remove this
-//        start = HoldEmRank::two; // prefix operator will not work for a low ace
-//    }
-    else {
-        ++start;
     }
 
     auto iter = hand.begin();
     for(; iter != hand.end(); ++iter) {
         // if the next card in hand is not the next card in the straight
-        if(iter->rank != start) {
+        if(iter->rank != rank_iter) {
             return false;
         }
 
-        if(start == HoldEmRank::five && iter == hand.end()-2) { // TODO double check this
+        if(rank_iter == HoldEmRank::five && iter == hand.end() - 1) {
             // wrap around to ace since that would be the next card in the straight based on ordering
-            start = HoldEmRank::ace;
+            rank_iter = HoldEmRank::ace;
         } else {
-            ++start;
+            ++rank_iter;
         }
     }
 
@@ -317,6 +309,7 @@ bool HoldEmGame::is_straight(CardSet<Suit, HoldEmRank>& hand) {
  * Find if a player has a flush in their hand.
  *
  * @param hand the player's hand
+ *
  * @return true if the player has a flush, false otherwise
  */
 bool HoldEmGame::is_flush(CardSet<Suit, HoldEmRank>& hand) {
@@ -325,15 +318,7 @@ bool HoldEmGame::is_flush(CardSet<Suit, HoldEmRank>& hand) {
     return std::all_of(hand.begin(), hand.end(),
                 [to_match](Card<Suit, HoldEmRank> card) {
                     return card.suit == to_match;
-                }); // TODO double check this
-//    for(auto card : hand) {
-//        if(card.suit != to_match) {
-//            return false;
-//        }
-//    }
-
-    // all cards matched suit
-//    return true;
+                });
 }
 
 
@@ -341,6 +326,7 @@ bool HoldEmGame::is_flush(CardSet<Suit, HoldEmRank>& hand) {
  * Return a vector holding the number of cards with the same rank.
  *
  * @param hand the player's hand
+ *
  * @return a vector of ints
  *
  * @note Example: if you have a hand of {J, J, J, Q, K} it will return 3, 1, 1
@@ -377,6 +363,7 @@ vector<int> HoldEmGame::how_many_same_rank(CardSet<Suit, HoldEmRank>& hand) {
  *
  * @param player1 a reference to the first player
  * @param player2 a reference to the second player
+ *
  * @return true if the value of the rank of player1's hand is less than the rank of player2's hand, otherwise false
  *
  * @relatesalso HoldEmGame::Player
@@ -404,17 +391,6 @@ bool operator<(const HoldEmGame::Player& player1, const HoldEmGame::Player& play
     // create copies of the vectors to be able to manipulate the hands in the function
     vector<Card<Suit, HoldEmRank> > p1_hand(p1_begin, p1_end);
     vector<Card<Suit, HoldEmRank> > p2_hand(p2_begin, p2_end);
-
-
-//    std::sort(p1_hand.begin(), p1_hand.end(),
-//              [](Card<Suit, HoldEmRank> a, Card<Suit, HoldEmRank> b) {
-//                        return lt_rank_suit(a,b);
-//                    });
-//    std::sort(p2_hand.begin(), p2_hand.end(),
-//              [](Card<Suit, HoldEmRank> a, Card<Suit, HoldEmRank> b) {
-//                        return lt_rank_suit(a,b);
-//                    });
-
 
     int size1 = 0; int size2 = 0;
     // a vector of maps where the first element is a map of player1's group ranks and the second is player2's map
@@ -500,6 +476,7 @@ bool operator<(const HoldEmGame::Player& player1, const HoldEmGame::Player& play
  *
  * @param p1_hand the first player's hand
  * @param p2_hand the second player's hand
+ *
  * @return true if player1's hand is less than player2's hand, otherwise false
  */
 bool find_highest_card(vector<Card<Suit, HoldEmRank> > p1_hand, vector<Card<Suit, HoldEmRank> > p2_hand) {
@@ -524,6 +501,7 @@ bool find_highest_card(vector<Card<Suit, HoldEmRank> > p1_hand, vector<Card<Suit
  * @param group_size2 the size of the second group
  * @param p1_hand the first player's (sorted) hand
  * @param p2_hand the second player's (sorted) hand
+ *
  * @return a vector of maps from int to HoldEmRank representing the ranks of each player's card groupings
  *
  * @note For example: a group could be a pair, therefore group_size1 would be 2 and group_size2 would just be 1.
@@ -620,6 +598,7 @@ vector<std::map<int, HoldEmRank> > find_group_rank(int group_size1, int group_si
  *
  * @param ost a reference to an ostream object
  * @param hand_rank the passed in hand rank
+ *
  * @return the reference to an ostream object that was passed in
  */
 ostream& operator<<(ostream& ost, const HoldEmHandRank& hand_rank) {

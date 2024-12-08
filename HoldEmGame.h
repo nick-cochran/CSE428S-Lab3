@@ -43,7 +43,7 @@ ostream& operator<<(ostream& ost, const HoldEmHandRank& hand_rank);
 
 class HoldEmGame : public Game {
     // public area first to be able to use the Player struct in private methods
-    // it looks cleaner to do it this way
+    // I tried another way and this worked the best.
  public:
     HoldEmGame(int argc, const char **argv);
     virtual int play();

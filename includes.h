@@ -43,6 +43,7 @@ const int GF_MAX_PLAYERS = 5;
 
 const int FIRST_PLAYER = 2;
 
+// text formatting constants
 const string BOLD = "\033[1m";
 const string BLACK_WHITE = "\033[47;30m";
 const string RED_WHITE = "\033[47;31m";

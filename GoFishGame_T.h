@@ -1,6 +1,11 @@
-//
-// Created by Nick Cochran on 11/30/24.
-//
+/*
+ * GoFishGame.h
+ * Author: Nick Cochran
+ * Email: c.nick@wustl.edu
+ *
+ * This header file contains the GoFishGame template class which inherits
+ *  from the Game class and the function declarations within.
+ */
 
 #ifndef LAB3_GOFISHDECK_H
 #define LAB3_GOFISHDECK_H

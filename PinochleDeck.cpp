@@ -15,22 +15,22 @@
 PinochleDeck::PinochleDeck() {
     for(Suit suit = firstSuit; suit != Suit::undefined; ++suit) {
         for(PinochleRank rank = PinochleRank::nine; rank != PinochleRank::undefined; ++rank) {
-            cards.push_back(Card(suit, rank));
+            cards.emplace_back(suit, rank);
         }
     }
     // nested for loop used again instead of two push backs in the previous one
     //   because this results in a better ordering
     for(Suit suit = firstSuit; suit != Suit::undefined; ++suit) {
         for(PinochleRank rank = PinochleRank::nine; rank != PinochleRank::undefined; ++rank) {
-            cards.push_back(Card(suit, rank));
+            cards.emplace_back(suit, rank);
         }
     }
 }
 
 /**
- * TODO
+ * Returns the first rank in the PinochleRank enum.
  *
- * @return
+ * @return the first rank in the PinochleRank enum.
  */
 PinochleRank get_first(PinochleDeck&) {
     return PinochleRank::nine;
@@ -70,28 +70,29 @@ ostream& operator<<(ostream& ost, const PinochleRank& pRank) {
 }
 
 /**
- * TODO
+ * Overloads the >> operator for the PinochleRank enum to read in a string representation of a card rank.
  *
- * @param ist
- * @param pRank
+ * @param ist a reference to an istream object
+ * @param pRank the passed in PinochleRank by reference
  *
- * @return
+ * @return the passed in istream object reference
  */
 istream& operator>>(istream& ist, PinochleRank& pRank) {
     string rank_name;
     ist >> rank_name;
+    std::transform(rank_name.begin(), rank_name.end(), rank_name.begin(), ::tolower);
 
     if(rank_name == "9") {
         pRank = PinochleRank::nine;
     } else if(rank_name == "10") {
         pRank = PinochleRank::ten;
-    } else if(rank_name == "J") {
+    } else if(rank_name == "j") {
         pRank = PinochleRank::jack;
-    } else if(rank_name == "Q") {
+    } else if(rank_name == "q") {
         pRank = PinochleRank::queen;
-    } else if(rank_name == "K") {
+    } else if(rank_name == "k") {
         pRank = PinochleRank::king;
-    } else if(rank_name == "A") {
+    } else if(rank_name == "a") {
         pRank = PinochleRank::ace;
     } else {
         pRank = PinochleRank::undefined;
@@ -100,7 +101,7 @@ istream& operator>>(istream& ist, PinochleRank& pRank) {
 }
 
 /**
- * Overloads the ++ prefix operator for the PinochleRank enum.
+ * Overloads the ++prefix operator for the PinochleRank enum.
  *
  * @param pRank a reference to the pinochle rank
  * @return the incremented pinochle rank

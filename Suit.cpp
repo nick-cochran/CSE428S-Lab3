@@ -13,6 +13,7 @@
  *
  * @param ost a reference to an ostream object
  * @param suit a const reference to a Suit
+ *
  * @return the passed in ostream object
  */
 ostream& operator<<(ostream &ost, const Suit &suit) {
@@ -40,6 +41,7 @@ ostream& operator<<(ostream &ost, const Suit &suit) {
  * Prefix ++ operator for the Suit enum to move to the next suit.
  *
  * @param suit a reference to a Suit
+ *
  * @return the incremented Suit that was passed in
  */
 Suit& operator++(Suit& suit) {

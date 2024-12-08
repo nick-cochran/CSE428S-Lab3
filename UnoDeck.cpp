@@ -1,6 +1,11 @@
-//
-// Created by Nick Cochran on 11/30/24.
-//
+/*
+ * UnoDeck.cpp
+ * Author: Nick Cochran
+ * Email: c.nick@wustl.edu
+ *
+ * This source file contains the definitions for the UnoDeck class and the functions
+ *      for the overloaded operators for the Color and UnoRank enums.
+ */
 
 #include "UnoDeck.h"
 
@@ -33,12 +38,12 @@ UnoDeck::UnoDeck() {
 }
 
 /**
- * TODO
+ * Overloads the << operator for the Color enum to print a string representation.
  *
- * @param ost
- * @param uno_color
+ * @param ost a reference to an ostream object
+ * @param uno_color the passed in Color by reference
  *
- * @return
+ * @return the passed in ostream object reference
  */
 ostream& operator<<(ostream& ost, const Color& uno_color) {
     switch(uno_color) {
@@ -64,11 +69,11 @@ ostream& operator<<(ostream& ost, const Color& uno_color) {
 }
 
 /**
- * TODO
+ * Overloads the ++prefix operator for the Color enum to increment to the next color.
  *
- * @param uno_color
+ * @param uno_color a reference to a Color object
  *
- * @return
+ * @return the incremented Color object
  */
 Color& operator++(Color& uno_color) {
     switch(uno_color) {
@@ -86,12 +91,12 @@ Color& operator++(Color& uno_color) {
 }
 
 /**
- * TODO
+ * Overloads the << operator for the UnoRank enum to print a string representation.
  *
- * @param ost
- * @param uno_rank
+ * @param ost a reference to an ostream object
+ * @param uno_rank the passed in UnoRank by reference
  *
- * @return
+ * @return the passed in ostream object reference
  */
 ostream& operator<<(ostream& ost, const UnoRank& uno_rank) {
     switch(uno_rank) {
@@ -150,16 +155,17 @@ ostream& operator<<(ostream& ost, const UnoRank& uno_rank) {
 }
 
 /**
- * TODO
+ * Overloads the >> operator for the UnoRank enum to read in a string representation of a card rank.
  *
- * @param ist
- * @param uno_rank
+ * @param ist a reference to an istream object
+ * @param uno_rank the passed in UnoRank by reference
  *
- * @return
+ * @return the passed in istream object reference
  */
 istream& operator>>(istream& ist, UnoRank& uno_rank) {
     string rank_name;
     ist >> rank_name;
+    std::transform(rank_name.begin(), rank_name.end(), rank_name.begin(), ::tolower);
 
     if(rank_name == "0") {
         uno_rank = UnoRank::zero;
@@ -181,17 +187,17 @@ istream& operator>>(istream& ist, UnoRank& uno_rank) {
         uno_rank = UnoRank::eight;
     } else if(rank_name == "9") {
         uno_rank = UnoRank::nine;
-    } else if(rank_name == "Skip") {
+    } else if(rank_name == "skip") {
         uno_rank = UnoRank::skip;
-    } else if(rank_name == "Reverse") {
+    } else if(rank_name == "reverse") {
         uno_rank = UnoRank::reverse;
-    } else if(rank_name == "Draw_Two") {
+    } else if(rank_name == "draw_two") {
         uno_rank = UnoRank::draw_two;
-    } else if(rank_name == "Draw_Four") {
+    } else if(rank_name == "draw_four") {
         uno_rank = UnoRank::draw_four;
-    } else if(rank_name == "Wild") {
+    } else if(rank_name == "wild") {
         uno_rank = UnoRank::wild;
-    } else if(rank_name == "Blank") {
+    } else if(rank_name == "blank") {
         uno_rank = UnoRank::blank;
     } else {
         uno_rank = UnoRank::undefined;
@@ -200,11 +206,11 @@ istream& operator>>(istream& ist, UnoRank& uno_rank) {
 }
 
 /**
- * TODO
+ * Overloads the ++prefix operator for the UnoRank enum to increment to the next card rank.
  *
- * @param uno_rank
+ * @param uno_rank a reference to a UnoRank object
  *
- * @return
+ * @return the incremented UnoRank object
  */
 UnoRank& operator++(UnoRank& uno_rank) {
     switch(uno_rank) {
@@ -244,9 +250,9 @@ UnoRank& operator++(UnoRank& uno_rank) {
 }
 
 /**
- * TODO
+ * Returns the first rank in the UnoRank enum.
  *
- * @return
+ * @return the first rank in the UnoRank enum
  */
 UnoRank get_first(UnoDeck&) {
     return UnoRank::zero;

@@ -1,6 +1,11 @@
-//
-// Created by Nick Cochran on 11/30/24.
-//
+/*
+ * UnoDeck.h
+ * Author: Nick Cochran
+ * Email: c.nick@wustl.edu
+ *
+ * This header file contains declarations for the UnoDeck class which inherits the Deck class,
+ *      an enum for Uno card ranks, and an enum for the Uno colors with useful operators for both.
+ */
 
 #ifndef LAB3_UNODECK_H
 #define LAB3_UNODECK_H

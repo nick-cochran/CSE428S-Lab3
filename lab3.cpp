@@ -20,7 +20,6 @@ int usage(const char **argv, const string& game_name);
 shared_ptr<Game> create(int argc, const char **argv);
 
 
-//
 /**
  * The main function to run the code.
  *
@@ -105,14 +104,14 @@ shared_ptr<Game> create(int argc, const char **argv) {
     } else if(game_name == "GoFish") {
         string deck_type = argv[GO_FISH_DECK];
         try {
-            const char **uno_argv = argv+1;
-            int uno_argc = argc-1;
+            const char **gf_argv = argv + 1;
+            int gf_argc = argc - 1;
             if(deck_type == "Uno") {
-                game = make_shared<GoFishGame<Color, UnoRank, UnoDeck> >(uno_argc, uno_argv);
+                game = make_shared<GoFishGame<Color, UnoRank, UnoDeck> >(gf_argc, gf_argv);
             } else if(deck_type == "HoldEm") {
-                game = make_shared<GoFishGame<Suit, HoldEmRank, HoldEmDeck> >(uno_argc, uno_argv);
+                game = make_shared<GoFishGame<Suit, HoldEmRank, HoldEmDeck> >(gf_argc, gf_argv);
             } else if(deck_type == "Pinochle") {
-                game = make_shared<GoFishGame<Suit, PinochleRank, PinochleDeck> >(uno_argc, uno_argv);
+                game = make_shared<GoFishGame<Suit, PinochleRank, PinochleDeck> >(gf_argc, gf_argv);
             } else {
                 cout << "Error: invalid deck type" << endl;
                 throw std::invalid_argument("invalid deck type");

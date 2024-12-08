@@ -4,7 +4,7 @@
  * Email: c.nick@wustl.edu
  *
  * This source file contains the definitions for the HoldEmDeck class and an enum
- *      of the appropriate card ranks for a game of Texas Hold Em and the << ++prefix operators.
+ *      of the appropriate card ranks for a game of Texas Hold Em and the << and >> and ++prefix operators.
  */
 
 #include "HoldEmDeck.h"
@@ -22,9 +22,9 @@ HoldEmDeck::HoldEmDeck() {
 }
 
 /**
- * TODO
+ * function to get the first rank in the HoldEmDeck enum.
  *
- * @return
+ * @return the first rank in the HoldEmDeck enum.
  */
 HoldEmRank get_first(HoldEmDeck&) {
     return HoldEmRank::two;
@@ -85,15 +85,17 @@ ostream& operator<<(ostream& ost, const HoldEmRank& heRank) {
 }
 
 /**
- * TODO
+ * Overloads the >> operator for the HoldEmRank enum to read in a string representation of a card rank.
  *
- * @param ist
- * @param heRank
- * @return
+ * @param ist a reference to an istream object
+ * @param heRank the passed in HoldEmRank by reference
+ *
+ * @return the passed in istream object reference
  */
 istream& operator>>(istream& ist, HoldEmRank& heRank) {
     string rank_name;
     ist >> rank_name;
+    std::transform(rank_name.begin(), rank_name.end(), rank_name.begin(), ::tolower);
 
     if(rank_name == "2") {
         heRank = HoldEmRank::two;
@@ -113,13 +115,13 @@ istream& operator>>(istream& ist, HoldEmRank& heRank) {
         heRank = HoldEmRank::nine;
     } else if(rank_name == "10") {
         heRank = HoldEmRank::ten;
-    } else if(rank_name == "J") {
+    } else if(rank_name == "j") {
         heRank = HoldEmRank::jack;
-    } else if(rank_name == "Q") {
+    } else if(rank_name == "q") {
         heRank = HoldEmRank::queen;
-    } else if(rank_name == "K") {
+    } else if(rank_name == "k") {
         heRank = HoldEmRank::king;
-    } else if(rank_name == "A") {
+    } else if(rank_name == "a") {
         heRank = HoldEmRank::ace;
     } else {
         heRank = HoldEmRank::undefined;
@@ -128,7 +130,7 @@ istream& operator>>(istream& ist, HoldEmRank& heRank) {
 }
 
 /**
- * Overloads the ++ prefix operator for the HoldEmRank enum to increment to the next card rank.
+ * Overloads the ++prefix operator for the HoldEmRank enum to increment to the next card rank.
  *
  * @param heRank a reference to a HoldEmRank object
  * @return the incremented HoldEmRank object

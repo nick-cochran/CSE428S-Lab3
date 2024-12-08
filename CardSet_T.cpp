@@ -89,11 +89,11 @@ void CardSet<Suit, Rank>::collect(CardSet<Suit, Rank>& card_set) {
 /**
  * Takes all cards from the inputted card set and pushes them into this card set depending on the predicate.
  *
- * @tparam Suit TODO
- * @tparam Rank
+ * @tparam Suit card suit template parameter
+ * @tparam Rank card rank template parameter
  *
- * @param card_set
- * @param pred
+ * @param card_set the card set to collect from
+ * @param pred the predicate to determine if a card should be collected
  */
 template <typename Suit, typename Rank>
 void CardSet<Suit, Rank>::collect_if(CardSet<Suit, Rank>& card_set, std::function<bool(Card<Suit, Rank>&)> pred) {
@@ -103,15 +103,16 @@ void CardSet<Suit, Rank>::collect_if(CardSet<Suit, Rank>& card_set, std::functio
 }
 
 /**
- * TODO
+ * Request a card of a certain rank and return true if it is found
+ *  and given to this card set, else return false.
  *
- * @tparam Suit
- * @tparam Rank
+ * @tparam Suit card suit template parameter
+ * @tparam Rank card rank template parameter
  *
- * @param card_set
- * @param rank
+ * @param card_set the card set to request from
+ * @param rank the rank of the card to request
  *
- * @return
+ * @return true if the card was found and pushed to this card set, otherwise false
  */
 template <typename Suit, typename Rank>
 bool CardSet<Suit, Rank>::request(CardSet<Suit, Rank>& card_set, Rank rank) {
@@ -157,10 +158,10 @@ auto CardSet<Suit, Rank>::end() -> iter_t {
 }
 
 /**
- * TODO
+ * Sort the cards vector in this card set using less than by rank then suit.
  *
- * @tparam Suit
- * @tparam Rank
+ * @tparam Suit card suit template parameter
+ * @tparam Rank card rank template parameter
  */
 template<typename Suit, typename Rank>
 void CardSet<Suit, Rank>::sort() {
@@ -176,6 +177,7 @@ void CardSet<Suit, Rank>::sort() {
  *
  * @tparam Suit card suit template parameter
  * @tparam Rank card rank template parameter
+ *
  * @return true if it is empty, otherwise false
  */
 template<typename Suit, typename Rank>
@@ -188,6 +190,7 @@ bool CardSet<Suit, Rank>::is_empty() {
  *
  * @tparam Suit card suit template parameter
  * @tparam Rank card rank template parameter
+ *
  * @return the size of the cards vector
  */
 template<typename Suit, typename Rank>

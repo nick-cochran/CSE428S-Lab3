@@ -11,12 +11,12 @@
 /**
  * Game constructor that pushes inputted player names into the appropriate vector.
  *
- * @param argc stardard length of input array
+ * @param argc length of input array
  * @param argv array of input strings
  */
 Game::Game(int argc, const char **argv) {
     for(int i = FIRST_PLAYER; i < argc; i++) {
-        player_names.push_back(argv[i]);
+        player_names.emplace_back(argv[i]);
     }
 }
 

@@ -12,8 +12,6 @@
 #include "includes.h"
 #include "Card_T.h"
 #include <algorithm>
-//#include <functional>
-//#include <iterator> TODO remove if not needed
 
 template <typename Suit, typename Rank> class CardSet {
  protected:

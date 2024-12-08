@@ -1,18 +1,22 @@
-//
-// Created by Nick Cochran on 11/30/24.
-//
+/*
+ * GoFishGame.cpp
+ * Author: Nick Cochran
+ * Email: c.nick@wustl.edu
+ *
+ * This source file contains the GoFishGame template class function definitions.
+ */
 
 #include "GoFishGame_T.h"
 
 
 /**
- * TODO
+ * Play function to run the game of Go Fish.
  *
- * @tparam GF_Suit
- * @tparam GF_Rank
- * @tparam GF_Deck
+ * @tparam GF_Suit the template suit type for this game of Go Fish.
+ * @tparam GF_Rank the template rank type for this game of Go Fish.
+ * @tparam GF_Deck the template deck type for this game of Go Fish.
  *
- * @return
+ * @return an integer representing success.
  */
 template<typename GF_Suit, typename GF_Rank, typename GF_Deck>
 int GoFishGame<GF_Suit, GF_Rank, GF_Deck>::play() {
@@ -34,17 +38,20 @@ int GoFishGame<GF_Suit, GF_Rank, GF_Deck>::play() {
             if(!player_still_in[p]) {
                 continue;
             }
+            if(std::count(player_still_in.begin(), player_still_in.end(), true) == 1) {
+                break;
+            }
 
             while(turn(p));
         }
 
-        // end
+        // end of the round
         cout << BOLD << "END OF ROUND " << round_num << RESET << endl;
-        round_num++;
+        ++round_num;
 
         cout << BOLD << "Books Made By Each Player: " << RESET << endl;
         for(int p = 0; p < num_players; ++p) {
-            int num_books = (books[p].get_size())/FOUR_OF_A_KIND; // TODO may need to say in readme how I interpreted this as total made books
+            int num_books = (books[p].get_size())/FOUR_OF_A_KIND;
             cout << player_names[p] << ": " << num_books << endl;
             players_num_books[p] = num_books;
         }
@@ -79,20 +86,15 @@ int GoFishGame<GF_Suit, GF_Rank, GF_Deck>::play() {
     return SUCCESS;
 }
 
-
-
-// TODO CREATE MORE TEMPLATE SPECIALIZATIONS
-// TODO I Went Another Direction But Majorly Need To Verify This
-
 /**
- * TODO
+ * Constructor for the Go Fish Game class.
  *
- * @tparam GF_Suit
- * @tparam GF_Rank
- * @tparam GF_Deck
+ * @tparam GF_Suit the template suit type for this game of Go Fish.
+ * @tparam GF_Rank the template rank type for this game of Go Fish.
+ * @tparam GF_Deck the template deck type for this game of Go Fish.
  *
- * @param argc
- * @param argv
+ * @param argc the length of the input array.
+ * @param argv the input array of strings.
  */
 template<typename GF_Suit, typename GF_Rank, typename GF_Deck>
 GoFishGame<GF_Suit, GF_Rank, GF_Deck>::GoFishGame(int argc, const char **argv) : Game(argc, argv) {
@@ -115,11 +117,11 @@ GoFishGame<GF_Suit, GF_Rank, GF_Deck>::GoFishGame(int argc, const char **argv) :
 }
 
 /**
- * TODO
+ * Deal out the cards to each player in the game.
  *
- * @tparam GF_Suit
- * @tparam GF_Rank
- * @tparam GF_Deck
+ * @tparam GF_Suit the template suit type for this game of Go Fish.
+ * @tparam GF_Rank the template rank type for this game of Go Fish.
+ * @tparam GF_Deck the template deck type for this game of Go Fish.
  */
 template<typename GF_Suit, typename GF_Rank, typename GF_Deck>
 void GoFishGame<GF_Suit, GF_Rank, GF_Deck>::deal() {
@@ -142,15 +144,15 @@ void GoFishGame<GF_Suit, GF_Rank, GF_Deck>::deal() {
 }
 
 /**
- * TODO
+ * Run a turn for a player in the game of Go Fish.
  *
- * @tparam GF_Suit
- * @tparam GF_Rank
- * @tparam GF_Deck
+ * @tparam GF_Suit the template suit type for this game of Go Fish.
+ * @tparam GF_Rank the template rank type for this game of Go Fish.
+ * @tparam GF_Deck the template deck type for this game of Go Fish.
  *
- * @param player_num
+ * @param player_num the number (in the vectors) of the player whose turn it is.
  *
- * @return
+ * @return true if the player found the card they were looking for, false otherwise.
  */
 template<typename GF_Suit, typename GF_Rank, typename GF_Deck>
 bool GoFishGame<GF_Suit, GF_Rank, GF_Deck>::turn(unsigned int player_num) {
@@ -199,6 +201,9 @@ bool GoFishGame<GF_Suit, GF_Rank, GF_Deck>::turn(unsigned int player_num) {
         if(player_ask == player_num) {
             cout << " You must select a different player than yourself.";
         }
+        if(!player_still_in[player_ask]) {
+            cout << " That player is out of the game.";
+        }
         cout << endl;
         cin >> player_ask;
         --player_ask;
@@ -232,21 +237,21 @@ bool GoFishGame<GF_Suit, GF_Rank, GF_Deck>::turn(unsigned int player_num) {
     }
     cout << endl;
     deck.collect(player_hand);
-    cout << "You Lose! Better luck next time!" << endl;
+    cout << BOLD << "You Are Out! Better luck next time!" << RESET << endl << endl;
     player_still_in[player_num] = false;
     return false;
 }
 
 /**
- * TODO
+ * Collect the books from a player's hand.
  *
- * @tparam GF_Suit
- * @tparam GF_Rank
- * @tparam GF_Deck
+ * @tparam GF_Suit the template suit type for this game of Go Fish.
+ * @tparam GF_Rank the template rank type for this game of Go Fish.
+ * @tparam GF_Deck the template deck type for this game of Go Fish.
  *
- * @param player_num
+ * @param player_num the number (in the vectors) of the player whose books are being collected.
  *
- * @return
+ * @return true if a book was collected, false otherwise.
  */
 template <typename GF_Suit, typename GF_Rank, typename GF_Deck>
 bool GoFishGame<GF_Suit, GF_Rank, GF_Deck>::collect_books(unsigned int player_num) {
@@ -268,7 +273,6 @@ bool GoFishGame<GF_Suit, GF_Rank, GF_Deck>::collect_books(unsigned int player_nu
 
             books[player_num].collect_if(hand, predicate);
             end_iter = hand.end();
-            ++base_iter;
             return true;
         }
         ++base_iter;

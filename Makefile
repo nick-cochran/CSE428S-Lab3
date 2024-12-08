@@ -26,8 +26,8 @@ LIBS    =
 #################### DO NOT CHANGE ANYTHING BELOW THIS LINE ###################
 
 #		C++ compiler
-#CXX		= g++
-CXX 	= g++-11	# For me to run it on my machine
+CXX		= g++
+#CXX 	= g++-11	# For me to run it on my machine
 
 #               All your source files (needed for executable dependency)
 USER_SRCS        = $(CMPL_SRCS) $(TMPL_SRCS) $(HEADER_FILES)
