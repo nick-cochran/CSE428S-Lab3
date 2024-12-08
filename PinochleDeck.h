@@ -14,11 +14,15 @@
 #include "Deck_T.h"
 #include "Card_T.h"
 
+class PinochleDeck;
+
 enum class PinochleRank {
     nine, jack, queen, king, ten, ace, undefined
 };
 ostream& operator<<(ostream& ost, const PinochleRank& pRank);
+istream& operator>>(istream& ist, PinochleRank& pRank);
 PinochleRank& operator++(PinochleRank& pRank);
+PinochleRank get_first(PinochleDeck&);
 
 class PinochleDeck : public Deck<Suit, PinochleRank> {
  public:

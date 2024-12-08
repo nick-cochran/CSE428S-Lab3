@@ -11,8 +11,6 @@
 
 #include "includes.h"
 
-const int FIRST_PLAYER = 2;
-
 // abstract Game class
 class Game {
  protected:

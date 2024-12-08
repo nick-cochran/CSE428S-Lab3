@@ -33,9 +33,9 @@ int HoldEmGame::play() {
         print_board(cout, HoldEmState::flop);
 
 
-        create_eval_players(players); // create players structs and assign hand ranks
+        create_eval_players(players); // create player_hands structs and assign hand ranks
         std::sort(players.begin(), players.end(),
-                  [](Player a, Player b) {
+                  [](Player& a, Player& b) { // TODO I changed this to a reference so verify it still works
                             return b < a;
                         });
 
@@ -113,7 +113,7 @@ void HoldEmGame::deal(CardSet<Suit, HoldEmRank>& burned_cards) {
 }
 
 /**
- * Initializes the players struct that is passed in and then assigns the appropriate hand rank.
+ * Initializes the player_hands struct that is passed in and then assigns the appropriate hand rank.
  *
  * @param players a reference to a vector of Players
  */
@@ -142,7 +142,7 @@ void HoldEmGame::create_eval_players(vector<Player>& players) {
  * @param ost a reference to an ostream object
  */
 void HoldEmGame::print_hands(ostream &ost) {
-    cout << "\033[1mThe players have been dealt their hands.\033[0m" << endl;
+    cout << "\033[1mThe player_hands have been dealt their hands.\033[0m" << endl;
     for(long unsigned int i = 0; i < hands.size(); ++i) {
         ost << "Player \033[1m" << player_names[i] << "\033[0m has hand: ";
         hands[i].print(ost, HOLDEM_HAND_SIZE);
@@ -181,13 +181,13 @@ void HoldEmGame::print_board(ostream &ost, HoldEmState cur_state) {
 }
 
 /**
- * Print out the players and their current hand rank.
+ * Print out the player_hands and their current hand rank.
  *
  * @param ost a reference to an ostream object
  * @param players a reference to a vector of Players
  */
 void HoldEmGame::print_players(ostream &ost, vector<Player>& players) {
-    ost << "\033[1;4mThese are the players current hands from best to worst.\033[0m" << endl;
+    ost << "\033[1;4mThese are the player_hands current hands from best to worst.\033[0m" << endl;
     for(Player player : players) {
         ost << "\033[1m" << player.player_name << "\033[0m has hand: ";
         // add 1 to hand size to prevent the program from adding a newline
@@ -199,7 +199,7 @@ void HoldEmGame::print_players(ostream &ost, vector<Player>& players) {
 }
 
 /**
- * collect cards from all players
+ * collect cards from all player_hands
  */
 void HoldEmGame::collect_cards() {
     for(auto& hand : hands) {
@@ -373,7 +373,7 @@ vector<int> HoldEmGame::how_many_same_rank(CardSet<Suit, HoldEmRank>& hand) {
 
 
 /**
- * Less than operator to compare two players' hand's ranks.
+ * Less than operator to compare two player_hands' hand's ranks.
  *
  * @param player1 a reference to the first player
  * @param player2 a reference to the second player

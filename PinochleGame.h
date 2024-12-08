@@ -39,6 +39,7 @@ class PinochleGame : public Game {
     static const unsigned int meld_values[];
     PinochleGame(int argc, const char **argv);
     virtual int play();
+    virtual ~PinochleGame() = default;
 };
 
 #endif //LAB1_PINOCHLEGAME_H

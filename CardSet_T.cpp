@@ -27,12 +27,17 @@ CardSet<Suit, Rank>::CardSet(const CardSet<Suit, Rank>& card_set) {
  *
  * @tparam Suit card suit template parameter
  * @tparam Rank card rank template parameter
+ *
  * @param ost a reference to an ostream object
  * @param size the number of cards to print on each line
  */
 template<typename Suit, typename Rank>
 void CardSet<Suit, Rank>::print(std::ostream &ost, size_t size) {
     size_t count = 0;
+    if(cards.empty()) {
+        ost << "No Cards" << endl;
+        return;
+    }
     for(Card<Suit, Rank> card : cards) {
         count++;
         ost << card << " ";
@@ -102,18 +107,24 @@ void CardSet<Suit, Rank>::collect_if(CardSet<Suit, Rank>& card_set, std::functio
  *
  * @tparam Suit
  * @tparam Rank
+ *
  * @param card_set
  * @param rank
+ *
  * @return
  */
 template <typename Suit, typename Rank>
 bool CardSet<Suit, Rank>::request(CardSet<Suit, Rank>& card_set, Rank rank) {
 
-    iter_t found_card = std::find(card_set.begin(), card_set.end(), rank);
+    iter_t found_card = std::find_if(card_set.begin(), card_set.end(),
+                                     [rank](card_t card) {
+                                        return card.rank == rank;
+                                    });
+
     if(found_card == card_set.end()) {
         return false;
     } else {
-        this->cards.push_back(found_card.base());
+        this->cards.push_back(*found_card);
         card_set.cards.erase(found_card);
         return true;
     }
@@ -170,4 +181,16 @@ void CardSet<Suit, Rank>::sort() {
 template<typename Suit, typename Rank>
 bool CardSet<Suit, Rank>::is_empty() {
     return this->cards.empty();
+}
+
+/**
+ * Returns the size of the cards vector
+ *
+ * @tparam Suit card suit template parameter
+ * @tparam Rank card rank template parameter
+ * @return the size of the cards vector
+ */
+template<typename Suit, typename Rank>
+int CardSet<Suit, Rank>::get_size() {
+    return this->cards.size();
 }

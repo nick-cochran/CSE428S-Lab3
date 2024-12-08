@@ -28,6 +28,15 @@ PinochleDeck::PinochleDeck() {
 }
 
 /**
+ * TODO
+ *
+ * @return
+ */
+PinochleRank get_first(PinochleDeck&) {
+    return PinochleRank::nine;
+}
+
+/**
  * Overloads the << operator for the PinochleRank enum.
  *
  * @param ost a reference to an ostream object
@@ -58,6 +67,36 @@ ostream& operator<<(ostream& ost, const PinochleRank& pRank) {
             ost << "?";
             return ost;
     }
+}
+
+/**
+ * TODO
+ *
+ * @param ist
+ * @param pRank
+ *
+ * @return
+ */
+istream& operator>>(istream& ist, PinochleRank& pRank) {
+    string rank_name;
+    ist >> rank_name;
+
+    if(rank_name == "9") {
+        pRank = PinochleRank::nine;
+    } else if(rank_name == "10") {
+        pRank = PinochleRank::ten;
+    } else if(rank_name == "J") {
+        pRank = PinochleRank::jack;
+    } else if(rank_name == "Q") {
+        pRank = PinochleRank::queen;
+    } else if(rank_name == "K") {
+        pRank = PinochleRank::king;
+    } else if(rank_name == "A") {
+        pRank = PinochleRank::ace;
+    } else {
+        pRank = PinochleRank::undefined;
+    }
+    return ist;
 }
 
 /**

@@ -43,6 +43,7 @@ ostream& operator<<(ostream& ost, const HoldEmHandRank& hand_rank);
 
 class HoldEmGame : public Game {
     // public area first to be able to use the Player struct in private methods
+    // it looks cleaner to do it this way
  public:
     HoldEmGame(int argc, const char **argv);
     virtual int play();
@@ -52,6 +53,7 @@ class HoldEmGame : public Game {
         HoldEmHandRank rank;
         Player(CardSet<Suit, HoldEmRank> hand, string player_name, HoldEmHandRank rank);
     };
+    virtual ~HoldEmGame() = default;
  private:
     void create_eval_players(vector<Player>& players);
     void print_hands(ostream &ost);
@@ -69,7 +71,6 @@ class HoldEmGame : public Game {
     vector< CardSet<Suit, HoldEmRank> > hands;
     CardSet<Suit, HoldEmRank> common_cards;
     virtual void deal(CardSet<Suit, HoldEmRank>& burned_cards);
-
 };
 bool operator<(const HoldEmGame::Player& player1, const HoldEmGame::Player& player2);
 bool find_highest_card(vector<Card<Suit, HoldEmRank> > p1_hand, vector<Card<Suit, HoldEmRank> > p2_hand);

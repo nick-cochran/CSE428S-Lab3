@@ -16,9 +16,18 @@
 HoldEmDeck::HoldEmDeck() {
     for(Suit suit = firstSuit; suit != Suit::undefined; ++suit) {
         for(HoldEmRank rank = HoldEmRank::two; rank != HoldEmRank::undefined; ++rank) {
-            cards.push_back(Card(suit, rank));
+            cards.emplace_back(suit, rank);
         }
     }
+}
+
+/**
+ * TODO
+ *
+ * @return
+ */
+HoldEmRank get_first(HoldEmDeck&) {
+    return HoldEmRank::two;
 }
 
 /**
@@ -73,6 +82,49 @@ ostream& operator<<(ostream& ost, const HoldEmRank& heRank) {
             ost << "?";
             return ost;
     }
+}
+
+/**
+ * TODO
+ *
+ * @param ist
+ * @param heRank
+ * @return
+ */
+istream& operator>>(istream& ist, HoldEmRank& heRank) {
+    string rank_name;
+    ist >> rank_name;
+
+    if(rank_name == "2") {
+        heRank = HoldEmRank::two;
+    } else if(rank_name == "3") {
+        heRank = HoldEmRank::three;
+    } else if(rank_name == "4") {
+        heRank = HoldEmRank::four;
+    } else if(rank_name == "5") {
+        heRank = HoldEmRank::five;
+    } else if(rank_name == "6") {
+        heRank = HoldEmRank::six;
+    } else if(rank_name == "7") {
+        heRank = HoldEmRank::seven;
+    } else if(rank_name == "8") {
+        heRank = HoldEmRank::eight;
+    } else if(rank_name == "9") {
+        heRank = HoldEmRank::nine;
+    } else if(rank_name == "10") {
+        heRank = HoldEmRank::ten;
+    } else if(rank_name == "J") {
+        heRank = HoldEmRank::jack;
+    } else if(rank_name == "Q") {
+        heRank = HoldEmRank::queen;
+    } else if(rank_name == "K") {
+        heRank = HoldEmRank::king;
+    } else if(rank_name == "A") {
+        heRank = HoldEmRank::ace;
+    } else {
+        heRank = HoldEmRank::undefined;
+    }
+    return ist;
 }
 
 /**

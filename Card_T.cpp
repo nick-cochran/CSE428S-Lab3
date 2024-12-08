@@ -14,6 +14,7 @@
  *
  * @tparam Suit card suit template parameter
  * @tparam Rank card rank template parameter
+ *
  * @param suit the suit of the card
  * @param rank the rank of the card
  */
@@ -25,13 +26,15 @@ Card<Suit, Rank>::Card(Suit suit, Rank rank): suit(suit), rank(rank) {}
  *
  * @tparam Suit card suit template parameter
  * @tparam Rank card rank template parameter
+ *
  * @param ost reference to an ostream object
  * @param card the card to output
+ *
  * @return the same ostream reference
  */
 template<typename Suit, typename Rank>
 ostream& operator<<(ostream& ost, const Card<Suit, Rank>& card) {
-    ost << card.rank << card.suit;
+    ost << card.suit << card.rank << " " << RESET;
     return ost;
 }
 
@@ -40,8 +43,10 @@ ostream& operator<<(ostream& ost, const Card<Suit, Rank>& card) {
  *
  * @tparam Suit card suit template parameter
  * @tparam Rank card rank template parameter
+ *
  * @param card1 first card to compare
  * @param card2 second card to compare
+ *
  * @return true if card1 is less than card2, else false
  */
 template<typename Suit, typename Rank>
@@ -60,8 +65,10 @@ bool lt_rank_suit(const Card<Suit, Rank>& card1, const Card<Suit, Rank>& card2) 
  *
  * @tparam Suit card suit template parameter
  * @tparam Rank card rank template parameter
+ *
  * @param card1 first card to compare
  * @param card2 second card to compare
+ *
  * @return true if card1 is less than card2, else false
  */
 template<typename Suit, typename Rank>

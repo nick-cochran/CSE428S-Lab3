@@ -16,7 +16,6 @@
 template<typename Suit, typename Rank> class Deck : public CardSet<Suit, Rank> {
  public:
     void shuffle();
-//    void collect(CardSet<Suit, Rank>& card_set);
 };
 
 #ifdef TEMPLATE_HEADERS_INCLUDE_SOURCE

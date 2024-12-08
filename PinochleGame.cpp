@@ -49,7 +49,7 @@ PinochleGame::PinochleGame(int argc, const char **argv): Game(argc, argv) {
 }
 
 /**
- * deal out the cards to all players
+ * deal out the cards to all player_hands
  */
 void PinochleGame::deal() {
     // deal a packet to each player until deck is empty
@@ -61,7 +61,7 @@ void PinochleGame::deal() {
 }
 
 /**
- * print the players' hands and melds they can make
+ * print the player_hands' hands and melds they can make
  *
  * @param ost a reference to an ostream object
  */
@@ -84,7 +84,7 @@ void PinochleGame::print_hands_and_melds(ostream &ost) {
 }
 
 /**
- * calls the deck's collect method on all players' hands
+ * calls the deck's collect method on all player_hands' hands
  */
 void PinochleGame::collect_cards() {
     for(auto& hand : hands) {
@@ -106,25 +106,16 @@ void PinochleGame::suit_independent_eval(const CardSet<Suit, PinochleRank> &hand
     std::map<PinochleRank, vector<Suit> > cards_dict = std::map<PinochleRank, vector<Suit> >();
 
     // create references to make cleaner code
-    auto& nines = cards_dict[PinochleRank::nine]; // TODO check why this is not used
     auto& jacks = cards_dict[PinochleRank::jack];
     auto& queens = cards_dict[PinochleRank::queen];
     auto& kings = cards_dict[PinochleRank::king];
-    auto& tens = cards_dict[PinochleRank::ten]; // TODO check why this is not used
     auto& aces = cards_dict[PinochleRank::ace];
-
-//    // initialize each of the vectors FIXME remove as per code review AFTER TESTING
-//    nines = vector<Suit>(); jacks = vector<Suit>(); queens = vector<Suit>();
-//    kings = vector<Suit>(); tens = vector<Suit>(); aces = vector<Suit>();
 
     // push cards into the card dictionary
     auto card = hand_copy.begin();
     for(; card != hand_copy.end(); ++card) {
         cards_dict[card->rank].push_back(card->suit);
     }
-//    for(auto card : hand_copy.*cards) {
-//        cards_dict[card.rank].push_back(card.suit);
-//    }
 
     // Aces meld is possible
     if(aces.size() >= 4) {

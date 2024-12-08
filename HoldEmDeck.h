@@ -14,12 +14,16 @@
 #include "Deck_T.h"
 #include "Card_T.h"
 
+class HoldEmDeck;
+
 enum class HoldEmRank {
     two, three, four, five, six, seven, eight, nine, ten,
         jack, queen, king, ace, undefined
 };
 ostream& operator<<(ostream& ost, const HoldEmRank& heRank);
+istream& operator>>(istream& ist, HoldEmRank& heRank);
 HoldEmRank& operator++(HoldEmRank& heRank);
+HoldEmRank get_first(HoldEmDeck&);
 
 
 class HoldEmDeck : public Deck<Suit, HoldEmRank> {
