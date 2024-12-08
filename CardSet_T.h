@@ -12,6 +12,7 @@
 #include "includes.h"
 #include "Card_T.h"
 #include <algorithm>
+#include <functional>
 
 template <typename Suit, typename Rank> class CardSet {
  protected:

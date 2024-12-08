@@ -16,6 +16,7 @@
 #include "UnoDeck.h"
 #include "HoldEmGame.h"
 #include "PinochleGame.h"
+#include <functional>
 
 const int FOUR_OF_A_KIND = 4;
 const int GF_CARDS_PER_LINE = 10;

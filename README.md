@@ -17,7 +17,9 @@ which often came from typos or making simple mistakes that were pretty easy fixe
 I also needed to declare virtual default destructors for my game classes to compile
 the code. I also ran into a problem with straights not being found in HoldEm because
 of a change to fix my error in the previous lab, but I caught that through testing
-both HoldEm and Pinochle again and fixed it once I figured that out.
+both HoldEm and Pinochle again and fixed it once I figured that out. Right before
+turning in I checked the code on the linux lab and found out a missing import wasn't
+being caught locally, but was on the lab machine so fixed that before turning in.
 
 ## Testing
 
@@ -27,12 +29,13 @@ in particular. I also did a lot of play testing to find all the bugs in the
 program, of which there were many. One that kept plaguing me was a problem in
 collecting the books, resulting in an infinite loop. I learned after a while that
 my code was fine other than a simple missing '&'. It was not a reference to the
-hand so it wasn't actually changing. In my play testing, I finally made it to the
-end of a game and found out that it didn't end even with 1 player left which helped
-me to find a bug where it would not end if the last player left is after the player
-that just lost as the for loop would just continue to that last player left. They 
-then would be completely unable to do anything because there are no other players to
-ask for cards from.
+hand so it wasn't actually changing.
+- In my play testing, I finally made it to the end of a game and found out that 
+it didn't end even with 1 player left which helped me to find a bug where it 
+would not end if the last player left is after the player that just lost as the 
+for loop would just continue to that last player left.
+- They then would be completely unable to do anything because there are
+no other players to ask for cards from.
 
 ## Design Choices
 
